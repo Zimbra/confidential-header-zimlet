@@ -1,0 +1,12 @@
+.ConfHeaderZimlet-infobar {
+  min-width:90%;
+ background-color:#4d5964;
+ min-height:55px;
+ color:white;
+ font-size:20px;
+ padding-left:10px;
+ vertical-align: middle;
+ line-height: 55px;  
+ margin:7px;
+ font-family: 'Roboto', sans-serif;
+}

@@ -1,2 +1,11 @@
-# confidential-header-zimlet
-Classic UI Zimlet allows the user to add and view the Confidential/Sensitivity Header based on RFC2156.
+# Confidential header Zimlet
+
+https://www.rfc-editor.org/rfc/rfc2156#section-5.3.4
+
+## Configuring Zimbra
+
+To allow the setting of the Sensitivity header one most enable it on the Zimbra server:
+
+```
+zmprov mcf +zimbraCustomMimeHeaderNameAllowed Sensitivity
+```
