@@ -1,5 +1,5 @@
 <zimlet name="com_zimbra_confidential_header" version="0.0.2" label="${msg.ConfHeaderZimlet_label}" description="${msg.ConfHeaderZimlet_descr}">
-   <summary></summary>
+   <summary>This Zimlet allows the user to add and view the Confidential/Sensitivity Header based on RFC2156.</summary>
    <include>com_zimbra_confidential_header.js</include>
    <handlerObject>com_zimbra_confidential_header_HandlerObject</handlerObject>
    <includeCSS>com_zimbra_confidential_header.css</includeCSS>
