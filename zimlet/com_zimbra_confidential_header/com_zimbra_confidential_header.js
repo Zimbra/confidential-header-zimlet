@@ -23,6 +23,12 @@ var ConfHeaderZimlet = com_zimbra_confidential_header_HandlerObject;
  */
 ConfHeaderZimlet.prototype.init = function() {
    AjxPackage.require({name:"MailCore", callback:new AjxCallback(this, this._applyRequestHeaders)});
+   var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_confidential_header').handlerObject;
+   if(!zimletInstance.sensitivity)
+   {
+      zimletInstance.sensitivity = [];
+   }
+   
 };
 
 /** This method is called from init and makes a header available
@@ -40,7 +46,7 @@ function() {
  * @param {ZmMailMsgView} msgView - the current ZmMailMsgView (upstream documentation needed)
  * */
 ConfHeaderZimlet.prototype.onMsgView = function (msg, oldMsg, msgView) {
-   var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_confidential_header').handlerObject;   
+   var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_confidential_header').handlerObject;
    try {
       var infoBarDiv = document.getElementById(msgView._infoBarId);      
       if (infoBarDiv) {
@@ -124,7 +130,7 @@ function(controller) {
 ConfHeaderZimlet.prototype.setSensitivity =
 function(controller) {
    var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_confidential_header').handlerObject;
-   controller.sensitivity = document.getElementById('ConfHeaderZimletsensitivity').value;
+   zimletInstance.sensitivity[appCtxt.getCurrentViewId()] = document.getElementById('ConfHeaderZimletsensitivity').value;
    try{
       zimletInstance._dialog.setContent('');
       zimletInstance._dialog.popdown();
@@ -140,7 +146,6 @@ function(controller) {
 ConfHeaderZimlet.prototype._cancelBtn =
 function(controller) {
    var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_confidential_header').handlerObject;
-   controller.sensitivity = "";
    try{
       zimletInstance._dialog.setContent('');
       zimletInstance._dialog.popdown();
@@ -151,13 +156,21 @@ function(controller) {
 //zmprov mcf +zimbraCustomMimeHeaderNameAllowed Sensitivity
 ConfHeaderZimlet.prototype.addCustomMimeHeaders =
 function(customHeaders) {
-   var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_confidential_header').handlerObject;   
-   var controller = appCtxt.getCurrentController();
-   switch(controller.sensitivity) {
-      case 'Personal':
-      case 'Private':
-      case 'Company-Confidential':
-         customHeaders.push({name:"Sensitivity", _content:controller.sensitivity});
-      break;
+   var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_confidential_header').handlerObject;
+   if(zimletInstance.sensitivity) {
+      if(zimletInstance.sensitivity[appCtxt.getCurrentViewId()])
+      {
+         var zimletInstance = appCtxt._zimletMgr.getZimletByName('com_zimbra_confidential_header').handlerObject;   
+         var controller = appCtxt.getCurrentController();
+         var sensitivity = zimletInstance.sensitivity[appCtxt.getCurrentViewId()];
+         switch (sensitivity) {
+            case 'Personal':
+            case 'Private':
+            case 'Company-Confidential':
+               customHeaders.push({name:"Sensitivity", _content:zimletInstance.sensitivity});
+            break;
+         }
+         zimletInstance.sensitivity[appCtxt.getCurrentViewId()] = "";
+      }
    }
 };
