@@ -165,9 +165,13 @@ function(customHeaders) {
          var sensitivity = zimletInstance.sensitivity[appCtxt.getCurrentViewId()];
          switch (sensitivity) {
             case 'Personal':
+               customHeaders.push({name:"Sensitivity", _content:'Personal'});
+            break;
             case 'Private':
+               customHeaders.push({name:"Sensitivity", _content:'Private'});
+            break;            
             case 'Company-Confidential':
-               customHeaders.push({name:"Sensitivity", _content:zimletInstance.sensitivity});
+               customHeaders.push({name:"Sensitivity", _content:'Company-Confidential'});
             break;
          }
          zimletInstance.sensitivity[appCtxt.getCurrentViewId()] = "";
