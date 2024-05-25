@@ -2,7 +2,7 @@
 
 This Classic UI Zimlet implements the reading and setting of the Sensitivity header RFC2156, it is implemented the same way as in MS Outlook, mainly to keep it consistent.
 
-For the Modern UI version take a look at [TLP Zimlet](https://github.com/Zimbra/zimbra-zimlet-tlp).
+For the Modern UI version take a look at https://github.com/Zimbra/zimbra-zimlet-confidential-header.
 
 ## Configuring Zimbra
 
